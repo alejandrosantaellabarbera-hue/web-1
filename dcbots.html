@@ -1,0 +1,575 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Discord Bots Premium — zeruxdev</title>
+  <meta name="description" content="Desarrollo premium de bots de Discord con arquitectura empresarial, sistemas escalables y soporte 24/7." />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0a0505;
+      --bg-darker: #050202;
+      --bg-card: rgba(30, 12, 12, 0.9);
+      --accent-red: #ff2a2a;
+      --accent-dark: #8b0000;
+      --accent-neon: #ff073a;
+      --premium-color: #cc0000;
+      --premium-glow: rgba(204, 0, 0, 0.3);
+      --text-light: #f5f0f0;
+      --text-muted: #c0a0a0;
+      --border: rgba(255, 40, 40, 0.25);
+      --radius: 16px;
+      --shadow: 0 10px 35px rgba(0,0,0,0.5);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; font-family: Inter, system-ui, sans-serif; }
+
+    body {
+      color: var(--text-light);
+      background: linear-gradient(135deg, var(--bg-darker), #150808, var(--bg-dark));
+      padding: 40px 20px;
+      min-height: 100vh;
+      position: relative;
+    }
+    
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 20% 30%, rgba(255, 40, 40, 0.08) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .container { 
+      max-width: 1100px; 
+      margin: 0 auto; 
+      position: relative;
+      z-index: 1;
+    }
+
+    header {
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      margin-bottom: 50px;
+      flex-wrap: wrap;
+      gap: 20px;
+      padding-bottom: 25px;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .brand { 
+      display: flex; 
+      gap: 18px; 
+      align-items: center; 
+    }
+    
+    .logo {
+      width: 65px; 
+      height: 65px; 
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, rgba(255, 40, 40, 0.2), rgba(139, 0, 0, 0.3));
+      border: 2px solid var(--premium-color);
+      box-shadow: var(--shadow), 0 0 15px var(--premium-glow);
+      overflow: hidden;
+    }
+    
+    .logo img { 
+      width: 65%; 
+      height: 65%; 
+      object-fit: contain;
+      filter: brightness(1.2);
+    }
+
+    h1 { 
+      font-size: 22px; 
+      font-weight: 800; 
+      background: linear-gradient(to right, var(--premium-color), var(--accent-red));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .subtitle { 
+      font-size: 14px; 
+      color: var(--text-muted);
+      margin-top: 5px;
+    }
+
+    nav a {
+      padding: 12px 24px; 
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--premium-color), var(--accent-red));
+      color: white; 
+      text-decoration: none; 
+      font-weight: 700;
+      border: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 20px var(--premium-glow);
+      font-size: 14px;
+    }
+    
+    nav a:hover { 
+      transform: translateY(-3px);
+      box-shadow: 0 12px 25px rgba(255, 7, 58, 0.6);
+      background: linear-gradient(135deg, var(--accent-red), var(--accent-neon));
+    }
+
+    .hero {
+      background: linear-gradient(145deg, var(--bg-card), rgba(35, 15, 15, 0.95));
+      border-radius: var(--radius);
+      padding: 40px 35px;
+      border: 2px solid var(--premium-color);
+      box-shadow: var(--shadow), 0 0 20px var(--premium-glow);
+      margin-bottom: 50px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, 
+        transparent, 
+        var(--premium-color), 
+        var(--accent-red),
+        var(--accent-neon),
+        transparent);
+    }
+    
+    .hero:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 45px rgba(0,0,0,0.6),
+                  0 0 30px var(--premium-glow);
+      border-color: var(--accent-neon);
+    }
+
+    .hero img {
+      width: 100%; 
+      height: 320px; 
+      object-fit: cover; 
+      border-radius: 12px;
+      border: 2px solid var(--premium-color);
+      margin-bottom: 30px;
+      transition: transform 0.3s ease;
+    }
+    
+    .hero img:hover {
+      transform: scale(1.02);
+    }
+
+    h2 { 
+      font-size: 26px; 
+      margin-bottom: 20px;
+      color: var(--accent-red);
+      font-weight: 700;
+      position: relative;
+      display: inline-block;
+    }
+    
+    h2::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--premium-color), var(--accent-red));
+      border-radius: 2px;
+    }
+    
+    p { 
+      font-size: 15px; 
+      line-height: 1.7; 
+      color: var(--text-muted); 
+      margin-bottom: 20px;
+    }
+
+    ul { 
+      list-style: none; 
+      padding-left: 0; 
+      margin-top: 15px;
+      margin-bottom: 25px;
+    }
+    
+    ul li {
+      padding: 10px 0;
+      color: var(--text-muted);
+      position: relative;
+      padding-left: 32px;
+      font-size: 15px;
+      transition: transform 0.3s ease;
+    }
+    
+    ul li:hover {
+      color: var(--text-light);
+      transform: translateX(5px);
+    }
+    
+    ul li::before {
+      content: "🏆";
+      color: var(--premium-color); 
+      margin-right: 12px;
+      position: absolute;
+      left: 0;
+      font-size: 16px;
+      filter: drop-shadow(0 0 5px var(--premium-glow));
+    }
+
+    .section { 
+      margin-top: 30px; 
+      padding-top: 30px;
+      border-top: 1px solid rgba(255, 40, 40, 0.15);
+    }
+
+    .btn-back {
+      display: inline-block;
+      padding: 14px 28px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--premium-color), var(--accent-red));
+      color: white; 
+      text-decoration: none; 
+      font-weight: 700;
+      border: none;
+      transition: all 0.3s ease;
+      margin-top: 30px;
+      box-shadow: 0 8px 20px var(--premium-glow);
+      font-size: 14px;
+    }
+    
+    .btn-back:hover { 
+      transform: translateY(-3px);
+      background: linear-gradient(135deg, var(--accent-red), var(--accent-neon));
+      box-shadow: 0 12px 25px rgba(255, 7, 58, 0.6);
+    }
+
+    /* Badge premium destacado */
+    .premium-badge {
+      display: inline-block;
+      padding: 8px 20px;
+      background: linear-gradient(135deg, var(--premium-color), #990000);
+      color: white;
+      font-weight: 800;
+      font-size: 14px;
+      border-radius: 25px;
+      margin: 10px 0 20px 0;
+      box-shadow: 0 5px 15px var(--premium-glow);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Sección de planes premium */
+    .pricing-section {
+      background: linear-gradient(135deg, rgba(60, 20, 20, 0.9), rgba(40, 15, 15, 0.95));
+      border-radius: var(--radius);
+      padding: 30px;
+      margin: 35px 0;
+      border: 2px solid var(--premium-color);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .pricing-section::before {
+      content: 'PREMIUM';
+      position: absolute;
+      top: 20px;
+      right: -30px;
+      background: var(--premium-color);
+      color: white;
+      padding: 8px 40px;
+      transform: rotate(45deg);
+      font-weight: 900;
+      font-size: 12px;
+      letter-spacing: 2px;
+    }
+    
+    .price-tag {
+      font-size: 28px;
+      font-weight: 900;
+      background: linear-gradient(to right, var(--premium-color), var(--accent-red));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin: 15px 0;
+    }
+    
+    .pricing-features {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      margin: 25px 0;
+    }
+    
+    .pricing-feature {
+      padding: 10px 18px;
+      background: rgba(255, 40, 40, 0.1);
+      border-radius: 8px;
+      border: 1px solid rgba(255, 40, 40, 0.2);
+      color: var(--text-light);
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    /* Botón de contacto para pagos */
+    .contact-btn {
+      display: inline-block;
+      padding: 14px 32px;
+      background: linear-gradient(135deg, #006600, #00cc00);
+      color: white;
+      text-decoration: none;
+      font-weight: 800;
+      border-radius: 12px;
+      margin-top: 20px;
+      box-shadow: 0 8px 20px rgba(0, 102, 0, 0.4);
+      transition: all 0.3s ease;
+      font-size: 15px;
+    }
+    
+    .contact-btn:hover {
+      transform: translateY(-3px);
+      background: linear-gradient(135deg, #00cc00, #00ff00);
+      box-shadow: 0 12px 25px rgba(0, 204, 0, 0.5);
+    }
+
+    /* Badges de características */
+    .feature-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 20px 0 30px 0;
+    }
+    
+    .feature-badge {
+      padding: 8px 16px;
+      border-radius: 20px;
+      background: rgba(204, 0, 0, 0.2);
+      border: 1px solid rgba(255, 40, 40, 0.3);
+      color: var(--accent-red);
+      font-size: 13px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    
+    .feature-badge:hover {
+      background: rgba(255, 40, 40, 0.3);
+      transform: translateY(-2px);
+      border-color: var(--accent-neon);
+    }
+
+    footer {
+      margin-top: 60px; 
+      text-align: center; 
+      color: var(--text-muted);
+      font-size: 14px; 
+      line-height: 1.6;
+      padding-top: 30px;
+      border-top: 1px solid var(--border);
+    }
+
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      
+      nav {
+        width: 100%;
+      }
+      
+      nav a {
+        display: block;
+        text-align: center;
+        width: 100%;
+      }
+      
+      .hero {
+        padding: 30px 20px;
+      }
+      
+      .hero img {
+        height: 220px;
+      }
+      
+      h1 { 
+        font-size: 20px; 
+      }
+      
+      h2 { 
+        font-size: 22px; 
+      }
+      
+      .pricing-features {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      body {
+        padding: 25px 15px;
+      }
+      
+      .logo {
+        width: 55px;
+        height: 55px;
+      }
+      
+      .hero {
+        padding: 25px 20px;
+      }
+      
+      .price-tag {
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- HEADER -->
+    <header>
+      <div class="brand">
+        <div class="logo">
+          <img src="images/logo.png" alt="Logo zeruxdev">
+        </div>
+        <div>
+          <h1>Discord Bots Premium — zeruxdev</h1>
+          <p class="subtitle">Servicio premium de desarrollo de bots de Discord con arquitectura empresarial y soporte dedicado</p>
+        </div>
+      </div>
+      <nav>
+        <a href="services.html">← Volver a Servicios</a>
+      </nav>
+    </header>
+
+    <!-- HERO / CONTENIDO -->
+    <section class="hero">
+      <img src="images/discord-bot.png" alt="Discord Bot">
+      
+      <div class="premium-badge">SERVICIO PREMIUM</div>
+      
+      <h2>Automatización Empresarial para Discord</h2>
+      <p>Servicio premium de desarrollo de bots de Discord con arquitectura modular de nivel empresarial. Soluciones completamente personalizadas, optimizadas para rendimiento máximo y diseñadas para escalabilidad ilimitada.</p>
+      
+      <div class="feature-badges">
+        <span class="feature-badge">Arquitectura Microservicios</span>
+        <span class="feature-badge">TypeScript + Node.js</span>
+        <span class="feature-badge">Bases de Datos SQL/NoSQL</span>
+        <span class="feature-badge">CI/CD Automatizado</span>
+        <span class="feature-badge">Dashboard en Tiempo Real</span>
+        <span class="feature-badge">Soporte 24/7</span>
+      </div>
+
+      <!-- Sección de precio premium -->
+      <div class="pricing-section">
+        <h2>Planes</h2>
+        <p>Servicio personalizado con desarrollo completo, implementación y soporte continuo.</p>
+        
+        <div class="price-tag">Desde 4€ - Personalizado</div>
+        
+        <div class="pricing-features">
+          <span class="pricing-feature">Desarrollo completo</span>
+          <span class="pricing-feature">Despliegue e instalación</span>
+          <span class="pricing-feature">Soporte 1 mes</span>
+          <span class="pricing-feature">Actualizaciones</span>
+          <span class="pricing-feature">Documentación técnica</span>
+        </div>
+        
+        <p><strong>Los precios varían según complejidad y requerimientos.</strong> Contacta para un presupuesto personalizado sin compromiso.</p>
+        
+        <a href="pagos.html" class="contact-btn">📋 Ver Métodos de Pago →</a>
+        <p style="margin-top: 15px; font-size: 14px;">o <a href="contacto.html" style="color: #ff2a2a; font-weight: 600;">contacta para consultas</a></p>
+      </div>
+
+      <div class="section">
+        <h2>Características Principales</h2>
+        <ul>
+          <li><strong>Integración con APIs externas</strong> - Webhooks, REST APIs, servicios de terceros con autenticación OAuth2</li>
+          <li><strong>Sistema de comandos avanzado</strong> - Slash commands, context menus, autocompletado inteligente</li>
+          <li><strong>Arquitectura modular premium</strong> - Sistema de plugins con hot-reload para expansión sin downtime</li>
+          <li><strong>Panel de control administrativo</strong> - Dashboard web responsive con métricas en tiempo real y logs</li>
+          <li><strong>Seguridad empresarial</strong> - Rate limiting avanzado, auditoría de logs, prevención de exploits y DDoS</li>
+          <li><strong>Sistemas de economía premium</strong> - Monedas virtuales, tiendas, sistemas de recompensas con blockchain opcional</li>
+          <li><strong>Backup automático</strong> - Sistema de respaldo diario con recuperación de desastres</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2>Stack Tecnológico & Infraestructura</h2>
+        <p>Implementación con tecnologías de nivel empresarial para garantizar máxima confiabilidad y rendimiento:</p>
+        <ul>
+          <li><strong>Node.js + TypeScript</strong> - Código tipado, mantenible y escalable con testing automatizado</li>
+          <li><strong>Bases de datos empresariales</strong> - MySQL para datos relacionales, MongoDB para documentos, Redis para cache</li>
+          <li><strong>Docker & Kubernetes</strong> - Contenedorización profesional y orquestación para alta disponibilidad</li>
+          <li><strong>CI/CD Pipeline avanzado</strong> - GitHub Actions/GitLab CI con testing automatizado y despliegue azul-verde</li>
+          <li><strong>Monitorización empresarial</strong> - Prometheus + Grafana para métricas de rendimiento y alertas</li>
+          <li><strong>Load balancing</strong> - Distribución inteligente de carga con auto-scaling</li>
+          <li><strong>CDN integrado</strong> - Entrega de assets optimizada globalmente</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2>Casos de Uso</h2>
+        <ul>
+          <li><strong>Comunidades de Gaming profesionales</strong> - Sistemas de economía complejos, rankings ELO, torneos automáticos con premios</li>
+          <li><strong>Servidores Educativos institucionales</strong> - Gestión de cursos automatizada, entrega de tareas, sistema de tickets con SLA</li>
+          <li><strong>Comunidades Creativas empresariales</strong> - Galerías de arte con derechos digitales, concursos automáticos, sistemas de votación verificada</li>
+          <li><strong>Servidores Corporativos</strong> - Gestión de equipos, automatización de workflows empresariales, reportes ejecutivos</li>
+          <li><strong>Eventos en vivo masivos</strong> - Integración con Twitch/YouTube/Streamlabs, gestión de espectadores, interacción en tiempo real</li>
+          <li><strong>Tiendas y e-commerce</strong> - Sistemas de pago integrados, gestión de inventario, notificaciones automáticas</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2>Proceso de Desarrollo</h2>
+        <ul>
+          <li><strong>1. Consultoría estratégica</strong> - Análisis profundo de requisitos y planificación detallada</li>
+          <li><strong>2. Desarrollo iterativo con sprints</strong> - Entregables semanales con demostraciones y feedback</li>
+          <li><strong>3. Pruebas de estrés y seguridad</strong> - Testing de carga y penetration testing</li>
+          <li><strong>4. Despliegue profesional</strong> - Implementación en staging, pruebas de aceptación y migración a producción</li>
+          <li><strong>5. Documentación completa</strong> - Manual técnico, guías de usuario y API documentation</li>
+          <li><strong>6. Soporte post-implementación</strong> - Mantenimiento mensual, actualizaciones de seguridad y mejoras continuas</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2>Garantías del Servicio</h2>
+        <ul>
+          <li><strong>Tiempo de actividad 99.9%</strong> - SLA garantizado con compensación por downtime</li>
+          <li><strong>Soporte prioritario 24/7</strong> - Respuesta en menos de 2 horas para problemas críticos</li>
+          <li><strong>Actualizaciones de seguridad</strong> - Parches aplicados automáticamente sin costo adicional</li>
+          <li><strong>Escalabilidad garantizada</strong> - Arquitectura preparada para crecimiento exponencial</li>
+          <li><strong>Propiedad del código</strong> - Derechos completos sobre el código desarrollado</li>
+          <li><strong>Confidencialidad</strong> - Acuerdo de no divulgación (NDA) incluido</li>
+        </ul>
+      </div>
+
+      <div style="text-align: center; margin-top: 40px;">
+        <a href="pagos.html" class="btn-back">💰 Ver Métodos de Pago</a>
+        <a href="contacto.html" class="contact-btn" style="margin-left: 20px;">📞 Contactar para Presupuesto</a>
+      </div>
+      
+      <a href="services.html" class="btn-back" style="display: block; text-align: center; margin-top: 30px;">← Volver a Servicios</a>
+    </section>
+
+    <footer>
+      <div>© 2025 — zeruxdev · Desarrollo Premium de Bots & Automatización Empresarial</div>
+      <div style="margin-top: 10px; font-size: 13px;">Servicio premium con garantía de calidad profesional</div>
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,521 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MySQL & Databases — zeruxdev</title>
+  <meta name="description" content="Gestión, diseño y optimización de bases de datos MySQL y sistemas avanzados para servidores Minecraft y paneles Pterodactyl." />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0a0505;
+      --bg-darker: #050202;
+      --bg-card: rgba(30, 12, 12, 0.9);
+      --accent-red: #ff2a2a;
+      --accent-dark: #8b0000;
+      --accent-neon: #ff073a;
+      --free-color: #00cc00;
+      --free-glow: rgba(0, 204, 0, 0.2);
+      --text-light: #f5f0f0;
+      --text-muted: #c0a0a0;
+      --border: rgba(255, 40, 40, 0.25);
+      --radius: 16px;
+      --shadow: 0 10px 35px rgba(0,0,0,0.5);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; font-family: Inter, system-ui, sans-serif; }
+
+    body {
+      color: var(--text-light);
+      background: linear-gradient(135deg, var(--bg-darker), #150808, var(--bg-dark));
+      padding: 40px 20px;
+      min-height: 100vh;
+      position: relative;
+    }
+    
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 20% 30%, rgba(255, 40, 40, 0.05) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .container { 
+      max-width: 1100px; 
+      margin: 0 auto; 
+      position: relative;
+      z-index: 1;
+    }
+
+    header {
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      margin-bottom: 50px;
+      flex-wrap: wrap;
+      gap: 20px;
+      padding-bottom: 25px;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .brand { 
+      display: flex; 
+      gap: 18px; 
+      align-items: center; 
+    }
+    
+    .logo {
+      width: 65px; 
+      height: 65px; 
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, rgba(255, 40, 40, 0.15), rgba(139, 0, 0, 0.25));
+      border: 2px solid var(--border);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    
+    .logo img { 
+      width: 65%; 
+      height: 65%; 
+      object-fit: contain;
+      filter: brightness(1.2);
+    }
+
+    h1 { 
+      font-size: 22px; 
+      font-weight: 800; 
+      background: linear-gradient(to right, var(--accent-dark), var(--accent-red));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    p.subtitle { 
+      font-size: 14px; 
+      color: var(--text-muted);
+      margin-top: 5px;
+    }
+
+    nav a {
+      padding: 12px 24px; 
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--accent-dark), var(--accent-red));
+      color: white; 
+      text-decoration: none; 
+      font-weight: 700;
+      border: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 20px rgba(139, 0, 0, 0.4);
+      font-size: 14px;
+    }
+    
+    nav a:hover { 
+      transform: translateY(-3px);
+      box-shadow: 0 12px 25px rgba(255, 7, 58, 0.5);
+      background: linear-gradient(135deg, var(--accent-red), var(--accent-neon));
+    }
+
+    .hero {
+      background: linear-gradient(145deg, var(--bg-card), rgba(25, 10, 10, 0.9));
+      border-radius: var(--radius);
+      padding: 40px 35px;
+      border: 2px solid var(--free-color);
+      box-shadow: var(--shadow), 0 0 20px var(--free-glow);
+      margin-bottom: 50px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, transparent, var(--free-color), #00ff00, #00cc00, transparent);
+    }
+    
+    .hero:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 45px rgba(0,0,0,0.6), 0 0 30px var(--free-glow);
+      border-color: #00ff00;
+    }
+
+    .hero img {
+      width: 100%; 
+      height: 320px; 
+      object-fit: cover; 
+      border-radius: 12px;
+      border: 2px solid var(--free-color);
+      margin-bottom: 30px;
+      transition: transform 0.3s ease;
+    }
+    
+    .hero img:hover {
+      transform: scale(1.02);
+    }
+
+    h2 { 
+      font-size: 26px; 
+      margin-bottom: 20px;
+      color: var(--accent-red);
+      font-weight: 700;
+      position: relative;
+      display: inline-block;
+    }
+    
+    h2::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--free-color), var(--accent-red));
+      border-radius: 2px;
+    }
+    
+    p { 
+      font-size: 15px; 
+      line-height: 1.7; 
+      color: var(--text-muted); 
+      margin-bottom: 20px;
+    }
+
+    ul { 
+      list-style: none; 
+      padding-left: 0; 
+      margin-top: 15px;
+      margin-bottom: 25px;
+    }
+    
+    ul li {
+      padding: 10px 0;
+      color: var(--text-muted);
+      position: relative;
+      padding-left: 32px;
+      font-size: 15px;
+      transition: transform 0.3s ease;
+    }
+    
+    ul li:hover {
+      color: var(--text-light);
+      transform: translateX(5px);
+    }
+    
+    ul li::before {
+      content: "🗃️";
+      color: var(--free-color); 
+      margin-right: 12px;
+      position: absolute;
+      left: 0;
+      font-size: 16px;
+      filter: drop-shadow(0 0 5px var(--free-glow));
+    }
+
+    .section { 
+      margin-top: 30px; 
+      padding-top: 30px;
+      border-top: 1px solid rgba(255, 40, 40, 0.1);
+    }
+
+    .btn-back {
+      display: inline-block;
+      padding: 14px 28px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--accent-dark), var(--accent-red));
+      color: white; 
+      text-decoration: none; 
+      font-weight: 700;
+      border: none;
+      transition: all 0.3s ease;
+      margin-top: 30px;
+      box-shadow: 0 8px 20px rgba(139, 0, 0, 0.4);
+      font-size: 14px;
+    }
+    
+    .btn-back:hover { 
+      transform: translateY(-3px);
+      background: linear-gradient(135deg, var(--accent-red), var(--accent-neon));
+      box-shadow: 0 12px 25px rgba(255, 7, 58, 0.5);
+    }
+
+    /* Sección de servicio gratuito */
+    .free-section {
+      background: linear-gradient(135deg, rgba(20, 60, 20, 0.9), rgba(15, 40, 15, 0.95));
+      border-radius: var(--radius);
+      padding: 30px;
+      margin: 35px 0;
+      border: 2px solid var(--free-color);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .free-section::before {
+      content: 'GRATIS';
+      position: absolute;
+      top: 20px;
+      right: -30px;
+      background: var(--free-color);
+      color: white;
+      padding: 8px 40px;
+      transform: rotate(45deg);
+      font-weight: 900;
+      font-size: 12px;
+      letter-spacing: 2px;
+    }
+    
+    .free-badge {
+      display: inline-block;
+      padding: 10px 25px;
+      background: linear-gradient(135deg, var(--free-color), #00ff00);
+      color: white;
+      font-weight: 800;
+      font-size: 18px;
+      border-radius: 25px;
+      margin: 15px 0;
+      box-shadow: 0 5px 15px var(--free-glow);
+    }
+    
+    .free-features {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      margin: 25px 0;
+    }
+    
+    .free-feature {
+      padding: 10px 18px;
+      background: rgba(0, 204, 0, 0.1);
+      border-radius: 8px;
+      border: 1px solid rgba(0, 255, 0, 0.2);
+      color: #c0ffc0;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    /* Badges de características */
+    .feature-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 20px 0 30px 0;
+    }
+    
+    .feature-badge {
+      padding: 8px 16px;
+      border-radius: 20px;
+      background: rgba(0, 100, 0, 0.2);
+      border: 1px solid rgba(0, 255, 0, 0.3);
+      color: var(--free-color);
+      font-size: 13px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    
+    .feature-badge:hover {
+      background: rgba(0, 204, 0, 0.3);
+      transform: translateY(-2px);
+      border-color: #00ff00;
+    }
+
+    footer {
+      margin-top: 60px; 
+      text-align: center; 
+      color: var(--text-muted);
+      font-size: 14px; 
+      line-height: 1.6;
+      padding-top: 30px;
+      border-top: 1px solid var(--border);
+    }
+
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      
+      nav {
+        width: 100%;
+      }
+      
+      nav a {
+        display: block;
+        text-align: center;
+        width: 100%;
+      }
+      
+      .hero {
+        padding: 30px 20px;
+      }
+      
+      .hero img {
+        height: 220px;
+      }
+      
+      h1 { 
+        font-size: 20px; 
+      }
+      
+      h2 { 
+        font-size: 22px; 
+      }
+      
+      .free-features {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      body {
+        padding: 25px 15px;
+      }
+      
+      .logo {
+        width: 55px;
+        height: 55px;
+      }
+      
+      .hero {
+        padding: 25px 20px;
+      }
+      
+      .free-badge {
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- HEADER -->
+    <header>
+      <div class="brand">
+        <div class="logo">
+          <img src="images/logo.png" alt="Logo zeruxdev">
+        </div>
+        <div>
+          <h1>MySQL & Databases — zeruxdev</h1>
+          <p class="subtitle">Gestión, diseño y optimización profesional de bases de datos</p>
+        </div>
+      </div>
+      <nav>
+        <a href="services.html">← Volver a Servicios</a>
+      </nav>
+    </header>
+
+    <!-- HERO / CONTENIDO -->
+    <section class="hero">
+      <img src="images/DBben.png" alt="MySQL & Databases">
+
+      <h2>Optimización de Bases de Datos Profesionales</h2>
+
+      <!-- Sección de servicio gratuito -->
+      <div class="free-section">
+        <h2>🚀 Servicio Completamente Gratuito</h2>
+        <p>Configuración profesional de bases de datos MySQL, MariaDB y Redis sin costo alguno.</p>
+        
+        <div class="free-badge">SERVICIO GRATUITO</div>
+        
+        <div class="free-features">
+          <span class="free-feature">MySQL/MariaDB</span>
+          <span class="free-feature">Redis Cache</span>
+          <span class="free-feature">Backups automáticos</span>
+          <span class="free-feature">Optimización</span>
+          <span class="free-feature">Soporte básico</span>
+        </div>
+        
+        <p><strong>Gestión profesional sin costos.</strong> Para configuraciones avanzadas o alta disponibilidad, consulta opciones adicionales.</p>
+        
+        <a href="contacto.html" class="btn-back">📞 Contactar para Configuración →</a>
+      </div>
+
+      <div class="feature-badges">
+        <span class="feature-badge">MySQL</span>
+        <span class="feature-badge">MariaDB</span>
+        <span class="feature-badge">Redis</span>
+        <span class="feature-badge">SQLite</span>
+        <span class="feature-badge">MongoDB</span>
+        <span class="feature-badge">PostgreSQL</span>
+      </div>
+
+      <p>Implemento, configuro y optimizo sistemas de bases de datos MySQL, MariaDB, Redis y más, asegurando máxima velocidad, seguridad y compatibilidad con tus servidores, paneles y plugins.</p>
+
+      <div class="section">
+        <h2>Características principales</h2>
+        <ul>
+          <li><strong>Instalación y configuración profesional</strong> - MySQL, MariaDB, SQLite y sistemas NoSQL</li>
+          <li><strong>Optimización avanzada</strong> - Tuning para servidores de Minecraft, proxys y aplicaciones web</li>
+          <li><strong>Conexión distribuida</strong> - Vinculación entre múltiples instancias y servicios remotos</li>
+          <li><strong>Sistema de backups automáticos</strong> - Copias de seguridad programadas y restauración rápida</li>
+          <li><strong>Gestión remota avanzada</strong> - Paneles web (phpMyAdmin, Adminer) y herramientas CLI</li>
+          <li><strong>Monitorización en tiempo real</strong> - Consultas, rendimiento y análisis de bottlenecks</li>
+          <li><strong>Seguridad de nivel empresarial</strong> - Firewall, cifrado SSL/TLS y control de acceso</li>
+          <li><strong>Replicación y alta disponibilidad</strong> - Sistemas master-slave y clustering</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2>Arquitectura y tecnología</h2>
+        <p>Diseño estructuras de bases de datos escalables y seguras, adaptadas a las necesidades específicas de cada proyecto. Aplico prácticas avanzadas de replicación, compresión y caching para garantizar comunicación óptima entre servidores y sistemas externos.</p>
+        <ul>
+          <li><strong>Compatibilidad total</strong> - Pterodactyl, BungeeCord/Velocity, LuckPerms, plugins de economía</li>
+          <li><strong>Integración de Redis</strong> - Caché de datos, sesiones de usuario y sistemas de mensajería</li>
+          <li><strong>Soporte para clústeres</strong> - Bases distribuidas, replicación geográfica y balanceo de carga</li>
+          <li><strong>Optimización de queries</strong> - Índices inteligentes, análisis de ejecución y tuning de consultas</li>
+          <li><strong>Protocolos seguros</strong> - SSL/TLS para conexiones externas y autenticación robusta</li>
+          <li><strong>Migración de datos</strong> - Transferencia segura entre diferentes sistemas y versiones</li>
+          <li><strong>Documentación técnica</strong> - Diagramas ER, esquemas de base y manuales de operación</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2>Casos de uso ideal</h2>
+        <ul>
+          <li><strong>Networks de Minecraft</strong> - Bases de datos centralizadas para múltiples servidores</li>
+          <li><strong>Sistemas complejos</strong> - Economías globales, permisos distribuidos y estadísticas unificadas</li>
+          <li><strong>Administradores profesionales</strong> - Requieren rendimiento máximo y estabilidad 24/7</li>
+          <li><strong>Infraestructuras empresariales</strong> - Integración con paneles Pterodactyl y APIs externas</li>
+          <li><strong>Aplicaciones web</strong> - Dashboards, paneles de control y sistemas de gestión</li>
+          <li><strong>Juegos y comunidades</strong> - Sistemas de ranking, logros y progresión de jugadores</li>
+          <li><strong>E-commerce y tiendas</strong> - Gestión de inventarios, transacciones y usuarios</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2>Beneficios clave</h2>
+        <ul>
+          <li><strong>Rendimiento optimizado</strong> - Consultas hasta 10x más rápidas con tuning profesional</li>
+          <li><strong>Seguridad reforzada</strong> - Protección contra inyecciones SQL y acceso no autorizado</li>
+          <li><strong>Escalabilidad garantizada</strong> - Preparado para crecimiento exponencial de datos</li>
+          <li><strong>Disponibilidad máxima</strong> - Sistemas de redundancia y recuperación de desastres</li>
+          <li><strong>Mantenimiento simplificado</strong> - Herramientas automatizadas y monitoreo proactivo</li>
+          <li><strong>Soporte técnico</strong> - Asistencia para problemas, optimizaciones y actualizaciones</li>
+        </ul>
+      </div>
+
+      <div style="text-align: center; margin-top: 40px;">
+        <a href="contacto.html" class="btn-back">📞 Contactar para Configuración</a>
+        <a href="services.html" class="btn-back" style="margin-left: 20px;">← Volver a Servicios</a>
+      </div>
+    </section>
+
+    <footer>
+      <div>© 2025 — zeruxdev · Gestión Profesional de Bases de Datos</div>
+    </footer>
+  </div>
+</body>
+</html>

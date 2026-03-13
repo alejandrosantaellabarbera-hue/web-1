@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Servicios — zeruxdev</title>
+<meta name="description" content="Servicios profesionales de desarrollo, automatización y administración de servidores por zeruxdev.">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  /* Estilos específicos para services.html */
+  body {
+    background: linear-gradient(135deg, #0a0505 0%, #150808 50%, #0a0505 100%);
+    padding: 40px 20px;
+    min-height: 100vh;
+  }
+  
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 80% 20%, rgba(255, 40, 40, 0.03) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+  }
+  
+  .container {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 50px;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding-bottom: 25px;
+    border-bottom: 2px solid rgba(255, 40, 40, 0.2);
+  }
+  
+  .brand {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  
+  .logo {
+    width: 70px;
+    height: 70px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(255, 40, 40, 0.15), rgba(139, 0, 0, 0.25));
+    border: 2px solid rgba(255, 40, 40, 0.3);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+  }
+  
+  .logo img {
+    width: 70%;
+    height: 70%;
+    object-fit: contain;
+    filter: brightness(1.2);
+  }
+  
+  h1 {
+    font-size: 24px;
+    font-weight: 800;
+    background: linear-gradient(to right, #8b0000, #ff2a2a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 5px;
+  }
+  
+  .subtitle {
+    font-size: 15px;
+    color: #c0a0a0;
+    max-width: 600px;
+  }
+  
+  nav a {
+    padding: 12px 24px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #8b0000, #ff2a2a);
+    color: white;
+    text-decoration: none;
+    font-weight: 700;
+    border: none;
+    transition: all 0.3s ease;
+    display: inline-block;
+    box-shadow: 0 8px 20px rgba(139, 0, 0, 0.4);
+    font-size: 14px;
+  }
+  
+  nav a:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 25px rgba(255, 7, 58, 0.5);
+    background: linear-gradient(135deg, #ff2a2a, #ff073a);
+  }
+  
+  /* Grid de portfolio */
+  .portfolio {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 30px;
+    margin-bottom: 70px;
+  }
+  
+  /* Tarjetas de servicios */
+  .service-card {
+    background: linear-gradient(145deg, rgba(30, 12, 12, 0.9), rgba(25, 10, 10, 0.9));
+    border-radius: 16px;
+    padding: 0;
+    border: 2px solid rgba(255, 40, 40, 0.2);
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .service-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8),
+                0 0 30px rgba(255, 7, 58, 0.2);
+    border-color: rgba(255, 7, 58, 0.4);
+  }
+  
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #8b0000, #ff2a2a, #ff073a);
+  }
+  
+  .service-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-bottom: 2px solid rgba(255, 40, 40, 0.2);
+  }
+  
+  .card-content {
+    padding: 25px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .service-card h3 {
+    font-size: 20px;
+    color: #f5f0f0;
+    margin-bottom: 12px;
+    font-weight: 700;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .service-card p {
+    font-size: 14px;
+    color: #c0a0a0;
+    line-height: 1.6;
+    margin-bottom: 25px;
+    flex-grow: 1;
+  }
+  
+  /* Badges de precio */
+  .price-badge {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  .price-free {
+    background: linear-gradient(135deg, #006600, #00cc00);
+    color: white;
+  }
+  
+  .price-paid {
+    background: linear-gradient(135deg, #660000, #cc0000);
+    color: white;
+  }
+  
+  /* Botones en tarjetas */
+  .card-btn {
+    padding: 12px 20px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, rgba(139, 0, 0, 0.3), rgba(255, 40, 40, 0.2));
+    color: #ff2a2a;
+    text-decoration: none;
+    font-weight: 700;
+    text-align: center;
+    border: 1px solid rgba(255, 40, 40, 0.3);
+    transition: all 0.3s ease;
+    font-size: 14px;
+    margin-top: auto;
+  }
+  
+  .card-btn:hover {
+    background: linear-gradient(135deg, rgba(255, 40, 40, 0.3), rgba(139, 0, 0, 0.2));
+    color: #ff073a;
+    border-color: rgba(255, 7, 58, 0.5);
+    transform: translateY(-2px);
+  }
+  
+  /* Footer */
+  footer {
+    text-align: center;
+    color: #c0a0a0;
+    font-size: 14px;
+    padding-top: 40px;
+    border-top: 1px solid rgba(255, 40, 40, 0.2);
+    margin-top: 40px;
+  }
+  
+  /* Responsive */
+  @media (max-width: 992px) {
+    .portfolio {
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 25px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    
+    nav {
+      width: 100%;
+    }
+    
+    nav a {
+      display: block;
+      text-align: center;
+      width: 100%;
+    }
+    
+    .portfolio {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    
+    .service-card {
+      max-width: 100%;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    body {
+      padding: 20px 15px;
+    }
+    
+    .logo {
+      width: 60px;
+      height: 60px;
+    }
+    
+    h1 {
+      font-size: 20px;
+    }
+    
+    .subtitle {
+      font-size: 14px;
+    }
+    
+    .card-content {
+      padding: 20px;
+    }
+  }
+
+.legend-container {
+  background: rgba(25, 10, 10, 0.8);
+  border-radius: 12px;
+  padding: 20px;
+  margin: 30px 0 40px 0;
+  border: 1px solid rgba(255, 40, 40, 0.3);
+  border-left: 4px solid #ff2a2a;
+}
+
+.legend-title {
+  color: #ff2a2a;
+  font-weight: 700;
+  font-size: 16px;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.legend-items {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.legend-item .price-badge {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.legend-text {
+  color: #c0a0a0;
+  font-size: 14px;
+}
+
+.legend-text strong {
+  color: #f5f0f0;
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <div class="brand">
+    <div class="logo"><img src="images/logo.png" alt="Logo zeruxdev"></div>
+    <div>
+      <h1>Servicios Profesionales — zeruxdev</h1>
+      <p class="subtitle">Soluciones completas de desarrollo, automatización y administración para servidores y comunidades.</p>
+    </div>
+  </div>
+  <nav><a href="index.html" class="btn primary">← Volver al Inicio</a></nav>
+</header>
+<!-- Después del header, antes de .portfolio -->
+<div class="legend-container">
+  <div class="legend-title">📋 Tipos de Servicios</div>
+  <div class="legend-items">
+    <div class="legend-item">
+      <span class="price-badge price-free"></span>
+      <span class="legend-text">Servicios <strong>Gratuitos</strong> - Sin costo alguno</span>
+    </div>
+    <div class="legend-item">
+      <span class="price-badge price-paid"></span>
+      <span class="legend-text">Servicios <strong>Premium</strong> - Con costo asociado</span>
+      <span class="legend-text"><strong>--- </strong>  Mas info sobre pagos <strong><a href="pagos.html">aquí</a></strong></span>
+    </div>
+  </div>
+</div>
+
+<section class="portfolio">
+<!-- SERVICIO 1 -->
+<div class="service-card">
+  <img src="images/discord-bot.png" alt="Discord Bots">
+  <div class="card-content">
+    <h3>Discord Bots <span class="price-badge price-paid">premium</span></h3>
+    <p>Sistemas de automatización empresarial con arquitectura modular, control de permisos avanzado y dashboard administrativo en tiempo real. Integración con APIs externas y bases de datos distribuidas.</p>
+    <a href="dcbots.html" class="card-btn">Ver Detalles Técnicos →</a>
+  </div>
+</div>
+
+<!-- SERVICIO 2 -->
+<div class="service-card">
+  <img src="images/m-plugin.png" alt="Plugins de Minecraft">
+  <div class="card-content">
+    <h3>Plugins de Minecraft <span class="price-badge price-paid">Premium</span></h3>
+    <p>Desarrollo de plugins personalizados con sistemas de economía escalable, protección territorial, sistemas de misiones y APIs modulares. Optimización para altas cargas de jugadores.</p>
+    <a href="mcplugins.html" class="card-btn">Ver Especificaciones →</a>
+  </div>
+</div>
+
+<!-- SERVICIO 3 -->
+<div class="service-card">
+  <img src="images/R.jpg" alt="Configurador Profesional de Linux">
+  <div class="card-content">
+    <h3>Configurador Profesional de Linux <span class="price-badge price-free">gratis</span></h3>
+    <p>Plataforma avanzada para configurar, optimizar y administrar sistemas Linux de forma profesional. Incluye gestión de servicios, ajustes del sistema, perfiles de rendimiento, automatización, exportación de configuraciones y compatibilidad con cualquier distribución.</p>
+    <a href="confgpro.html" class="card-btn">Ver Funcionalidades →</a>
+  </div>
+</div>
+
+<!-- SERVICIO 4 -->
+<div class="service-card">
+  <img src="images/proxy.png" alt="Proxys Minecraft">
+  <div class="card-content">
+    <h3>Infraestructura Proxy <span class="price-badge price-free">gratis</span></h3>
+    <p>Configuración avanzada de redes proxy BungeeCord/Velocity con balanceo de carga, seguridad perimetral, optimización de conexiones y sistema de failover automático.</p>
+    <a href="proxys.html" class="card-btn">Ver Arquitectura →</a>
+  </div>
+</div>
+
+<!-- SERVICIO 5 -->
+<div class="service-card">
+  <img src="images/discordsrv.jpg" alt="DiscordSRV">
+  <div class="card-content">
+    <h3>Integración DiscordSRV <span class="price-badge price-free">Gratis</span></h3>
+    <p>Sincronización bidireccional de chat, roles y permisos entre Minecraft y Discord. Compatibilidad total con proxies y GeyserMC. Sistema de logging y moderación integrado.</p>
+    <a href="discordsrv.html" class="card-btn">Ver Configuración →</a>
+  </div>
+</div>
+
+<!-- SERVICIO 6 -->
+<div class="service-card">
+  <img src="images/geysermc.jpg" alt="GeyserMC">
+  <div class="card-content">
+    <h3>Plataforma GeyserMC <span class="price-badge price-free">Gratis</span></h3>
+    <p>Implementación completa de GeyserMC para conexión cross-platform. Mantenimiento de todos los sistemas Java con adaptación automática para jugadores Bedrock.</p>
+    <a href="geysermc.html" class="card-btn">Ver Implementación →</a>
+  </div>
+</div>
+
+<!-- SERVICIO 7 -->
+<div class="service-card">
+  <img src="images/ptero.jpg" alt="Paneles Pterodactyl">
+  <div class="card-content">
+    <h3>Panel Pterodactyl <span class="price-badge price-paid">Premium</span></h3>
+    <p>Instalación, personalización y administración de paneles Pterodactyl. Configuración de nodos, branding corporativo, SSL automático y sistema de subdominios.</p>
+    <a href="pterodactyl.html" class="card-btn">Ver Características →</a>
+  </div>
+</div>
+
+<!-- SERVICIO 8 -->
+<div class="service-card">
+  <img src="images/MySQL.png" alt="MySQL & Databases">
+  <div class="card-content">
+    <h3>Bases de Datos MySQL <span class="price-badge price-free">Gratis</span></h3>
+    <p>Diseño e implementación de bases de datos relacionales optimizadas para redes de Minecraft. Sistemas de backup automático, replicación y consultas optimizadas.</p>
+    <a href="mysql.html" class="card-btn">Ver Esquemas →</a>
+  </div>
+</div>
+
+<!-- SERVICIO 9 -->
+<div class="service-card">
+  <img src="images/SysAdmin.webp" alt="SysAdmin & VPS">
+  <div class="card-content">
+    <h3>Administración de Sistemas <span class="price-badge price-paid">Premium</span></h3>
+    <p>Administración profesional de servidores Linux. Configuración de firewalls, políticas de seguridad, sistemas de backup automatizado y optimización de recursos.</p>
+    <a href="sysadmin.html" class="card-btn">Ver Servicios →</a>
+  </div>
+</div>
+
+</section>
+
+<footer>© 2025 — zeruxdev · Desarrollo Profesional de Bots, Plugins, Infraestructura y Administración de Servidores</footer>
+</div>
+</body>
+</html>

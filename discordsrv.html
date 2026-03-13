@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DiscordSRV — DevAlment</title>
+<meta name="description" content="Integración avanzada de chat y roles entre Minecraft y Discord con DiscordSRV.">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg1:#00d4ff; --bg2:#2fa7f2; --bg3:#3b6ee6; --bg4:#4b8ff8;
+  --glass:rgba(255,255,255,0.08); --glass-2:rgba(255,255,255,0.06);
+  --accent:rgba(255,255,255,0.92); --muted:rgba(255,255,255,0.82);
+  --card-blur:10px; --radius:14px; --shadow:0 8px 24px rgba(0,0,0,0.25);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;font-family:Inter,system-ui,sans-serif;}
+body{color:var(--accent);background:linear-gradient(-45deg,var(--bg1),var(--bg2),var(--bg3),var(--bg4));background-size:400% 400%;animation:gradient 15s ease infinite;padding:40px 20px;overflow-x:hidden;}
+@keyframes gradient{0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
+.container{max-width:1000px;margin:0 auto;}
+header{display:flex;justify-content:space-between;align-items:center;margin-bottom:40px;}
+.brand{display:flex;gap:14px;align-items:center;}
+.logo{height:56px;width:56px;border-radius:12px;background:linear-gradient(180deg,rgba(255,255,255,0.15),rgba(255,255,255,0.05));display:grid;place-items:center;backdrop-filter:blur(8px);box-shadow:var(--shadow);overflow:hidden;}
+.logo img{width:100%;height:100%;object-fit:cover;}
+h1{font-size:20px;font-weight:800;}
+p.subtitle{font-size:14px;opacity:0.9;}
+nav a{padding:10px 16px;border-radius:10px;background:linear-gradient(90deg,rgba(255,255,255,0.2),rgba(255,255,255,0.1));backdrop-filter:blur(6px);color:var(--accent);text-decoration:none;font-weight:600;}
+nav a:hover{background:rgba(255,255,255,0.15);}
+.hero{display:flex;flex-direction:column;gap:24px;padding:26px;border-radius:var(--radius);background:linear-gradient(180deg,var(--glass),var(--glass-2));backdrop-filter:blur(var(--card-blur));box-shadow:var(--shadow);}
+.hero img{width:100%;height:300px;object-fit:cover;border-radius:var(--radius);}
+h2{font-size:28px;margin-bottom:14px;}
+p{font-size:15px;line-height:1.5;color:var(--muted);margin-bottom:14px;}
+ul{list-style:none;padding-left:0;margin-top:10px;}
+ul li::before{content:"✔";color:var(--accent);margin-right:8px;}
+.btn-back{display:inline-block;padding:10px 18px;border-radius:12px;background:linear-gradient(90deg,rgba(255,255,255,0.2),rgba(255,255,255,0.1));backdrop-filter:blur(6px);color:var(--accent);text-decoration:none;font-weight:600;margin-top:20px;}
+.btn-back:hover{background:rgba(255,255,255,0.15);}
+footer{margin-top:40px;text-align:center;color:rgba(255,255,255,0.8);font-size:13px;line-height:1.5;}
+@media(max-width:600px){.hero img{height:200px;}h2{font-size:24px;}}
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+<div class="brand">
+<div class="logo"><img src="images/logo.png" alt="Logo DevAlment"></div>
+<div>
+<h1>DiscordSRV — DevAlment</h1>
+<p class="subtitle">Sincronización profesional entre Minecraft y Discord</p>
+</div>
+</div>
+<nav><a href="services.html" class="btn-back">Volver al Portfolio</a></nav>
+</header>
+
+<section class="hero">
+<img src="images/discordsrv.jpg" alt="DiscordSRV">
+<nav><a href="discordsrv-ejemplos.html" class="btn-back">Ver ejemplos</a></nav>
+<h2>Conecta tu servidor con Discord</h2>
+<p>Configuro DiscordSRV para integrar completamente el chat y roles de tu servidor Minecraft con Discord, mejorando la comunicación y gestión de tu comunidad.</p>
+<ul>
+<li>Chat bidireccional entre Minecraft y Discord</li>
+<li>Sincronización de roles, rangos y permisos</li>
+<li>Alertas de eventos, logs y notificaciones</li>
+<li>Compatibilidad con proxys y GeyserMC</li>
+<li>Control de mensajes con prefijos personalizados</li>
+<li>Optimización para servidores grandes y comunidades activas</li>
+</ul>
+<p>Todo configurado profesionalmente para mantener el chat fluido, seguro y administrable, facilitando la gestión de tu comunidad y la integración con otros plugins.</p>
+<a href="services.html" class="btn-back">Volver al Portfolio</a>
+</section>
+
+<footer>© 2025 — DevAlment · Dev de Bots & Minecraft</footer>
+</div>
+</body>
+</html>
